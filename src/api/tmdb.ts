@@ -8,11 +8,15 @@ async function get<TBody>(relativeUrl: string): Promise<TBody> {
   headers.append("Authorization", `Bearer ${configuration.apiToken}`);
 
   const requestOptions = {
-      method: "GET",
-      headers: headers
+    method: "GET",
+    headers: headers
   };
 
   const response = await fetch(`${apiBasePath}${relativeUrl}`, requestOptions);
+  console.log(`Fetching URL: ${apiBasePath}${relativeUrl}`);
+  if (!response.ok) {
+    throw new Error(`HTTP error! Status: ${response.status}`);
+  }
   const value: TBody = await response.json();
   return value;
 }
