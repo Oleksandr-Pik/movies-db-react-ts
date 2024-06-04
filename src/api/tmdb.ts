@@ -1,23 +1,50 @@
-async function get(relativeUrl: string) {
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0Y2RhM2MyMjFlZjA3NDBhMDFlNmMwZTllNzdkNzJkMCIsInN1YiI6IjY1OTU0Y2UwYTY5OGNmNWExMzQzYTA1ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KQiqVQlKVKjNnvB8aixow-b7QW092Q8cG4KYkgdhwxo'
-    }
+import configuration from "../configuration";
+
+const apiBasePath = `${configuration.apiUrl}/3`
+
+async function get<TBody>(relativeUrl: string): Promise<TBody> {
+  const headers = new Headers();
+  headers.append("Accept", "application/json");
+  headers.append("Authorization", `Bearer ${configuration.apiToken}`);
+
+  const requestOptions = {
+      method: "GET",
+      headers: headers
   };
 
-  const response = await fetch(
-    `https://api.themoviedb.org/3${relativeUrl}`,
-    options
-  )
-  const json = response.json()
+  const response = await fetch(`${apiBasePath}${relativeUrl}`, requestOptions);
+  const value: TBody = await response.json();
+  return value;
+}
 
-  return json;
+export interface MovieDetails {
+  id: number;
+  title: string;
+  popularity: number;
+  overview: string;
+  backdrop_path?: string;
+}
+
+interface PageResponse<TResult> {
+  page: number;
+  results: TResult[];
+}
+
+interface Configuration {
+  images: {
+    base_url: string;
+  };
 }
 
 export const client = {
-  async getNowPlaying() {
-    return await get('/movie/now_playing?language=en-US&page=1')
+  async getConfiguration() {
+    return get<Configuration>("/configuration");
+  },
+  async getNowPlaying(): Promise<MovieDetails[]> {
+    const response = await get<PageResponse<MovieDetails>>(
+      "/movie/now_playing?page=1"
+    );
+
+    return response.results;
   }
 }

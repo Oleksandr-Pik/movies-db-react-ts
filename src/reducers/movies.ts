@@ -1,11 +1,11 @@
 import { Action, Reducer } from "redux";
 
-
 export interface Movie {
   id: number;
   title: string;
   popularity: number;
   overview: string;
+  image?: string;
 }
 
 interface MovieState {
