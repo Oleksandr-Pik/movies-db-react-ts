@@ -5,13 +5,13 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { About } from './features/About/About';
-import Movies, { MoviesFetch } from './features/Movies/Movies';
+import Movies from './features/Movies/Movies';
 import store from './store';
 import { Provider } from 'react-redux';
 
 const router = createBrowserRouter([
   {
-    path: "/", 
+    path: "/",
     element: (
       <Provider store={store}>
         <App />
@@ -24,7 +24,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/movies",
-        element: <MoviesFetch />
+        element: <Movies />
       }
     ]
   }

@@ -13,6 +13,7 @@ async function get<TBody>(relativeUrl: string): Promise<TBody> {
   };
 
   const response = await fetch(`${apiBasePath}${relativeUrl}`, requestOptions);
+  console.log(configuration)
   console.log(`Fetching URL: ${apiBasePath}${relativeUrl}`);
   if (!response.ok) {
     throw new Error(`HTTP error! Status: ${response.status}`);
