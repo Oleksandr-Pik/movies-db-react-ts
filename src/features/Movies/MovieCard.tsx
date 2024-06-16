@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
 import { Link as RouterLink } from 'react-router-dom'
+// import { Link } from 'react-router-dom';
 import { Card, CardMedia, CardContent, CardActions, Button, Typography, IconButton, Tooltip } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
@@ -12,12 +12,12 @@ interface MovieCardProps {
   enableUserActions?: boolean;
 }
 
-export function MovieCard({
+function MovieCard({
   id,
   title,
   overview,
   popularity,
-  enableUserActions,
+  enableUserActions = false,
   image = "/movie-thumb.png"
 }: MovieCardProps) {
   return (

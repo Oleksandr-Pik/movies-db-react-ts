@@ -2,8 +2,8 @@ import { useState, useEffect, useRef } from 'react'
 import { Typography } from '@mui/material'
 
 export default function CountdownText() {
+  const intervalRef = useRef<any>(null)
   const [countdown, setCountdown] = useState(9)
-  const intervalRef = useRef<any>()
 
   useEffect(() => {
     intervalRef.current = setInterval(() => {
